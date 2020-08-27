@@ -15,8 +15,8 @@ public class Duke {
         //String[] Task = new String[100];
         Task[] tasks = new Task[100];
         int tasksCount = 0;
-        int listFlag = 0;
-        int listNum = 1; //to print out the 1.
+        int listFlag = 1;//to print out the 1.
+        int listNum = 0;
 
         Scanner in = new Scanner(System.in);
         Task line = new Task(in.nextLine());
@@ -25,19 +25,19 @@ public class Duke {
         while(!(line.description.matches("Bye") ||line.description.matches("bye"))) {
             if (!line.description.matches("list")) {
                 System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
-                tasks[listFlag] = line;
-                listFlag++;
+                tasks[listNum] = line;
+                listNum++;
             }
 
             if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
                 System.out.println("Here are the tasks in your list:");
                 for (tasksCount = 0; tasks[tasksCount].description != null; ) {
-                    System.out.println(listNum + ". [" + tasks[tasksCount].getStatusIcon() +"]" + tasks[tasksCount].description);
-                    if (listNum == listFlag) {
+                    System.out.println(listFlag + ". [" + tasks[tasksCount].getStatusIcon() +"]" + tasks[tasksCount].description);
+                    if (listFlag == listNum) {
                         break;
                     }
-                    listNum++;
+                    listFlag++;
                     tasksCount++;
                 }
                 System.out.println(lineCutOff);
