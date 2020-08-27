@@ -32,12 +32,13 @@ public class Duke {
             if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
                 System.out.println("Here are the tasks in your list:");
-                for (listNum = 0; tasks[tasksCount].description != null; ) {
+                for (tasksCount = 0; tasks[tasksCount].description != null; ) {
                     System.out.println(listNum + ". [" + tasks[tasksCount].getStatusIcon() +"]" + tasks[tasksCount].description);
                     if (listNum == listFlag) {
                         break;
                     }
                     listNum++;
+                    tasksCount++;
                 }
                 System.out.println(lineCutOff);
             }
