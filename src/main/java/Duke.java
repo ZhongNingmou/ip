@@ -11,14 +11,32 @@ public class Duke {
         String lineCutOff = "_______________________";
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
+        String[] lists = new String[100];
+        int listFlag = 0;
+        int listNum = 1;
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        while(!(line.matches("Bye") ||line.matches("bye") ) ){
-            System.out.println(lineCutOff + "\n" + line + "\n" + lineCutOff);
+        while(!(line.matches("Bye") ||line.matches("bye"))) {
+            if (!line.matches("list")) {
+                System.out.println(lineCutOff + "\n" + "added: " + line + "\n" + lineCutOff);
+                lists[listFlag] = line;
+                listFlag++;
+            }
+
+            if (line.matches("list")) {
+                System.out.println(lineCutOff);
+                for (String list : lists) {
+                    System.out.println(listNum + ". " + list);
+                    if (listNum == listFlag) {
+                        break;
+                    }
+                    listNum++;
+                }
+                System.out.println(lineCutOff);
+            }
             line = in.nextLine();
         }
-        System.out.println(lineCutOff + "\n" + line);
         System.out.println(lineCutOff + "\nBye. Hope to see you again soon!" + "\n" + lineCutOff);
     }
 }
