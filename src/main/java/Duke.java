@@ -23,31 +23,33 @@ public class Duke {
 
 
         while(!(line.description.matches("Bye") ||line.description.matches("bye"))) {
-            if (!line.description.matches("list")) {
+            if (line.description.startsWith("done")) {
+                int listIndex = Integer.parseInt(line.description.substring(5)) - 1;
+                tasks[listIndex].setIsDone(true);
+                System.out.println(lineCutOff);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  [" + tasks[listIndex].getStatusIcon() + "] " + tasks[listIndex].description);
+                System.out.println(lineCutOff);
+            }
+
+            else if (!line.description.matches("list")) {
                 System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
                 tasks[listNum] = line;
                 listNum++;
             }
 
-            if (line.description.matches("list")) {
+            else if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
                 System.out.println("Here are the tasks in your list:");
                 for (tasksCount = 0; tasks[tasksCount].description != null; ) {
                     System.out.println(listFlag + ". [" + tasks[tasksCount].getStatusIcon() +"]" + tasks[tasksCount].description);
                     if (listFlag == listNum) {
+                        listFlag = 1;
                         break;
                     }
                     listFlag++;
                     tasksCount++;
                 }
-                System.out.println(lineCutOff);
-            }
-
-            if (line.description.startsWith("done")) {
-                int listIndex = Integer.parseInt(line.description.substring(5)) - 1;
-                tasks[listIndex].setIsDone(true);
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [" + tasks[listIndex].getStatusIcon() + "] " + tasks[listIndex].description);
                 System.out.println(lineCutOff);
             }
 
