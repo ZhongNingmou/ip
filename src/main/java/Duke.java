@@ -30,15 +30,11 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  [" + tasks[listIndex].getStatusIcon() + "] " + tasks[listIndex].description);
                 System.out.println(lineCutOff);
-            }
-
-            else if (!line.description.matches("list")) {
+            } else if (!line.description.matches("list")) {
                 System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
                 tasks[listNum] = line;
                 listNum++;
-            }
-
-            else if (line.description.matches("list")) {
+            } else if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
                 System.out.println("Here are the tasks in your list:");
                 for (tasksCount = 0; tasks[tasksCount].description != null; ) {
