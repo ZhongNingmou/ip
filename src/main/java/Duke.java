@@ -1,7 +1,8 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
+    static String lineCutOff = "_______________________";
+
     public static Task taskType(String task) {
         if (task.startsWith("todo")){
             return new ToDo(task.substring(5));
@@ -15,6 +16,13 @@ public class Duke {
         return null;
     }
 
+    public static void printTask(Task task, int listNum) {
+        System.out.println(lineCutOff + "\n" + "Got it. I've added this task: ");
+        System.out.println("  " + task.toString());
+        System.out.println("Now you have " + (listNum + 1) + " tasks in the list.");
+        System.out.println(lineCutOff + "\n");
+    }
+
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -23,12 +31,12 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        String lineCutOff = "_______________________";
+        //String lineCutOff = "_______________________";
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
         //String[] Task = new String[100];
         Task[] tasks = new Task[100];
-        int tasksCount = 0;
+        int tasksCount;
         int listFlag = 1;//to print out the 1.
         int listNum = 0;
 
@@ -45,12 +53,9 @@ public class Duke {
                 System.out.println("  [" + tasks[listIndex].getStatusIcon() + "] " + tasks[listIndex].description);
                 System.out.println(lineCutOff);
             } else if (!line.description.matches("list")) {
-                //System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
                 tasks[listNum] = taskType(line.description);
-                System.out.println(lineCutOff + "\n" + "Got it. I've added this task: ");
-                System.out.println("  " + tasks[listNum].toString());
-                System.out.println("Now you have " + (listNum + 1) + " tasks in the list.");
-                System.out.println(lineCutOff + "\n");
+                assert tasks[listNum] != null;
+                printTask(tasks[listNum],listNum);
                 listNum++;
             } else if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
