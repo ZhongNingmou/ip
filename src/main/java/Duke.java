@@ -2,6 +2,20 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class Duke {
+    public static Task taskType(String task) {
+        if (task.startsWith("todo")){
+            return new ToDo(task.substring(5));
+        }else if (task.startsWith("deadline")){
+            int indexBy = task.indexOf("/");
+            return new Deadline(task.substring(9,indexBy - 1), task.substring(indexBy + 1));
+        }else if (task.startsWith("event")){
+            int indexAt = task.indexOf("/");
+            return new Event(task.substring(6, indexAt - 1), task.substring(indexAt + 1));
+        }
+        return null;
+    }
+
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -31,14 +45,18 @@ public class Duke {
                 System.out.println("  [" + tasks[listIndex].getStatusIcon() + "] " + tasks[listIndex].description);
                 System.out.println(lineCutOff);
             } else if (!line.description.matches("list")) {
-                System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
-                tasks[listNum] = line;
+                //System.out.println(lineCutOff + "\n" + "added: " + line.description + "\n" + lineCutOff);
+                tasks[listNum] = taskType(line.description);
+                System.out.println(lineCutOff + "\n" + "Got it. I've added this task: ");
+                System.out.println("  " + tasks[listNum].toString());
+                System.out.println("Now you have " + (listNum + 1) + " tasks in the list.");
+                System.out.println(lineCutOff + "\n");
                 listNum++;
             } else if (line.description.matches("list")) {
                 System.out.println(lineCutOff);
                 System.out.println("Here are the tasks in your list:");
                 for (tasksCount = 0; tasks[tasksCount].description != null; ) {
-                    System.out.println(listFlag + ". [" + tasks[tasksCount].getStatusIcon() +"]" + tasks[tasksCount].description);
+                    System.out.println(listFlag + ". " + tasks[tasksCount].toString());
                     if (listFlag == listNum) {
                         listFlag = 1;
                         break;
