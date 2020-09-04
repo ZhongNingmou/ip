@@ -11,10 +11,10 @@ public class Duke {
             return new ToDo(task.substring(TODO_TASK_INDEX ));
         }else if (task.startsWith("deadline")){
             int indexBy = task.indexOf("/");
-            return new Deadline(task.substring(DEADLINE_TASK_INDEX,indexBy - 1), task.substring(indexBy + 1));
+            return new Deadline(task.substring(DEADLINE_TASK_INDEX,indexBy - 1), task.substring(indexBy + 3));
         }else if (task.startsWith("event")){
             int indexAt = task.indexOf("/");
-            return new Event(task.substring(EVENT_TASK_INDEX, indexAt - 1), task.substring(indexAt + 1));
+            return new Event(task.substring(EVENT_TASK_INDEX, indexAt - 1), task.substring(indexAt + 3));
         }
         return null;
     }
