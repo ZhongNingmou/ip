@@ -52,6 +52,27 @@ public class Duke {
         System.out.println(lineCutOff);
     }
 
+    public static void printList(Task[] task, int listNum) {
+        System.out.println(lineCutOff);
+        try {
+            if (task[0] == null) {
+                throw new DukeException();
+
+            } else {
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; task[i].description != null; i++) {
+                    System.out.println(i + 1 + ". " + task[i].toString());
+                    if (i + 1 == listNum) {
+                        break;
+                    }
+                }
+            }
+        } catch (DukeException e) {
+            System.out.println("Oops! Your list seems empty");
+        }
+        System.out.println(lineCutOff);
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -59,11 +80,9 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        //String lineCutOff = "_______________________";
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
         Task[] tasks = new Task[100];
-        int listFlag = 1;//to print out the 1.
         int listNum = 0;
 
         Scanner in = new Scanner(System.in);
@@ -82,17 +101,7 @@ public class Duke {
                     listNum++;
                 }
             } else if (line.description.matches("list")) {
-                System.out.println(lineCutOff);
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; tasks[i].description != null; i++) {
-                    System.out.println(listFlag + ". " + tasks[i].toString());
-                    if (listFlag == listNum) {
-                        listFlag = 1;
-                        break;
-                    }
-                    listFlag++;
-                }
-                System.out.println(lineCutOff);
+                printList(tasks,listNum);
             }
 
             line = new Task(in.nextLine());
