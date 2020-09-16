@@ -1,3 +1,8 @@
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -46,29 +51,42 @@ public class Duke {
     }
 
     public static void printDone(Task task) {
-        System.out.println(lineCutOff);
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  [" + task.getStatusIcon() + "] " + task.description);
-        System.out.println(lineCutOff);
+        try {
+            if (task == null) {
+                throw new DukeException();
+            }
+            else {
+                task.setIsDone(true);
+                System.out.println(lineCutOff);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(task.toString());
+                System.out.println(lineCutOff);
+            }
+        } catch (DukeException e) {
+            System.out.println(lineCutOff);
+            System.out.println("☹ OOPS!!! There is no such task.");
+            System.out.println(lineCutOff);
+        }
     }
 
-    public static void printList(Task[] task, int listNum) {
+    public static void printList(Task[] tasks, int listNum) {
         System.out.println(lineCutOff);
         try {
-            if (task[0] == null) {
+            if (tasks[0] == null) {
                 throw new DukeException();
 
             } else {
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 0; task[i].description != null; i++) {
-                    System.out.println(i + 1 + ". " + task[i].toString());
+                int i = 0;
+                for (Task task: tasks) {
+                    System.out.println(i + 1 + ". " + task.toString());
                     if (i + 1 == listNum) {
                         break;
                     }
                 }
             }
         } catch (DukeException e) {
-            System.out.println("Oops! Your list seems empty");
+            System.out.println("☹ OOPS!!! Your list seems empty");
         }
         System.out.println(lineCutOff);
     }
@@ -86,25 +104,25 @@ public class Duke {
         int listNum = 0;
 
         Scanner in = new Scanner(System.in);
-        Task line = new Task(in.nextLine());
+        String line = new String(in.nextLine());
 
 
-        while (!(line.description.matches("Bye") ||line.description.matches("bye"))) {
-            if (line.description.startsWith("done")) {
-                int listIndex = Integer.parseInt(line.description.substring(5)) - 1;
-                tasks[listIndex].setIsDone(true);
+        while (!(line.matches("Bye") ||line.matches("bye"))) {
+            if (line.startsWith("done")) {
+                int listIndex = Integer.parseInt(line.substring(5)) - 1;
+                //tasks[listIndex].setIsDone(true);
                 printDone(tasks[listIndex]);
-            } else if (!line.description.matches("list")) {
-                tasks[listNum] = taskType(line.description);
+            } else if (!line.matches("list")) {
+                tasks[listNum] = taskType(line);
                 if (tasks[listNum] != null) {
                     printTask(tasks[listNum], listNum);
                     listNum++;
                 }
-            } else if (line.description.matches("list")) {
+            } else if (line.matches("list")) {
                 printList(tasks,listNum);
             }
 
-            line = new Task(in.nextLine());
+            line = new String(in.nextLine());
         }
         System.out.println(lineCutOff + "\nBye. Hope to see you again soon!" + "\n" + lineCutOff);
     }
