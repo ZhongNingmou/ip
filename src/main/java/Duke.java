@@ -20,6 +20,7 @@ public class Duke {
     static int DONE_TASK_INDEX = 5;
     static int DELETE_TASK_INDEX = 7;
 
+    //save changes
     public static void writeToFile(String FILE_PATH){
         try{
             File f = new File(FILE_PATH);
@@ -32,8 +33,7 @@ public class Duke {
             System.out.println("Something went wrong with IO stream.\n");
         }
     }
-
-    //save changes
+    
     public static void readFromFile(String FILE_PATH){
         try{
             File f = new File(FILE_PATH);
