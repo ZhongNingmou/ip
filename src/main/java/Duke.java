@@ -5,15 +5,58 @@ import duke.task.ToDo;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     public static ArrayList<Task> tasks = new ArrayList<>();
+    public static final String FILE_PATH = "duke.txt";
     static String lineCutOff = "_______________________";
     static int TODO_TASK_INDEX = 5;
     static int DEADLINE_TASK_INDEX = 9;
     static int EVENT_TASK_INDEX = 6;
     static int DONE_TASK_INDEX = 5;
     static int DELETE_TASK_INDEX = 7;
+
+    //save changes
+    public static void writeToFile(String FILE_PATH){
+        try{
+            File f = new File(FILE_PATH);
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (Task task: tasks){
+                fw.write(task.writeToFile());
+            }
+            fw.close();
+        } catch (IOException e){
+            System.out.println("Something went wrong with IO stream.\n");
+        }
+    }
+    
+    public static void readFromFile(String FILE_PATH){
+        try{
+            File f = new File(FILE_PATH);
+            Scanner s = new Scanner(f);
+            Task task;
+            while(s.hasNext()){
+                String[] descriptions = s.nextLine().split("\\|");
+                task = switch (descriptions[0]) {
+                    case ("T") -> new ToDo(descriptions[2]);
+                    case ("D") -> new Deadline(descriptions[2], descriptions[3]);
+                    case ("E") -> new Event(descriptions[2], descriptions[3]);
+                    default -> new Task(descriptions[2]);
+                };
+
+                if (descriptions[1].equals("1")){
+                    task.setIsDone(true);
+                }
+                tasks.add(task);
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+        }
+    }
 
     public static Task taskType(String task) {
         try {
@@ -161,6 +204,7 @@ public class Duke {
         int listNum = 0;
 
         tasks.add(null);
+        readFromFile(FILE_PATH);
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
 
@@ -168,10 +212,13 @@ public class Duke {
         while (!(line.matches("Bye") ||line.matches("bye"))) {
             if (line.startsWith("done")) {
                 printDone(line);
+                writeToFile(FILE_PATH);
             } else if (line.startsWith("delete")) {
                 printDelete(line);
+                writeToFile(FILE_PATH);
             } else if (!line.matches("list")) {
                 listNum = setTasks(listNum,line);
+                writeToFile(FILE_PATH);
             } else if (line.matches("list")) {
                 printList(tasks);
             }
