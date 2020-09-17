@@ -17,6 +17,10 @@ public class Task {
         this.isDone = isDone;
     }
 
+    public String writeToFile(){
+        return "T|" + isDone + "|" + this.description + "\n";
+    }
+
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "]" + this.description;
