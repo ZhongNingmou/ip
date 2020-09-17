@@ -12,6 +12,8 @@ public class Duke {
     static int TODO_TASK_INDEX = 5;
     static int DEADLINE_TASK_INDEX = 9;
     static int EVENT_TASK_INDEX = 6;
+    static int DONE_TASK_INDEX = 5;
+    static int DELETE_TASK_INDEX = 7;
 
     public static Task taskType(String task) {
         try {
@@ -57,16 +59,50 @@ public class Duke {
         System.out.println(lineCutOff + "\n");
     }
 
-    public static void printDone(int listIndex) {
+    public static void printDone(String line) {
         try {
+            if (line.equals("done")) {
+                throw new DukeException();
+            }
+            int listIndex = Integer.parseInt(line.substring(DONE_TASK_INDEX)) - 1;
             if (listIndex >= tasks.size()) {
+                throw new DukeException();
+            } else if (tasks.get(listIndex) == null){
                 throw new DukeException();
             }
             else {
+
                 tasks.get(listIndex).setIsDone(true);
                 System.out.println(lineCutOff);
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(tasks.get(listIndex).toString());
+                System.out.println(lineCutOff);
+            }
+        } catch (DukeException e) {
+            System.out.println(lineCutOff);
+            System.out.println("☹ OOPS!!! There is no such task.");
+            System.out.println(lineCutOff);
+        }
+    }
+
+    public static void printDelete(String line) {
+        try {
+            if (line.equals("delete")) {
+                throw new DukeException();
+            }
+            int listIndex = Integer.parseInt(line.substring(DELETE_TASK_INDEX)) - 1;
+            if (listIndex >= tasks.size()) {
+                throw new DukeException();
+            } else if (tasks.get(listIndex) == null){
+                throw new DukeException();
+            }
+            else {
+                System.out.println(lineCutOff);
+                System.out.println("Noted. I've removed this task: ");
+                System.out.println(tasks.get(listIndex).toString());
+                System.out.println(lineCutOff);
+                tasks.remove(tasks.get(listIndex));
+                System.out.println("Now you have " + tasks.size() + " items in the list.");
                 System.out.println(lineCutOff);
             }
         } catch (DukeException e) {
@@ -112,6 +148,7 @@ public class Duke {
         return listNum;
     }
 
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -130,8 +167,9 @@ public class Duke {
 
         while (!(line.matches("Bye") ||line.matches("bye"))) {
             if (line.startsWith("done")) {
-                int listIndex = Integer.parseInt(line.substring(5)) - 1;
-                printDone(listIndex);
+                printDone(line);
+            } else if (line.startsWith("delete")) {
+                printDelete(line);
             } else if (!line.matches("list")) {
                 listNum = setTasks(listNum,line);
             } else if (line.matches("list")) {
