@@ -4,8 +4,10 @@ import duke.task.Task;
 import duke.task.ToDo;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
+    public static ArrayList<Task> tasks = new ArrayList<>();
     static String lineCutOff = "_______________________";
     static int TODO_TASK_INDEX = 5;
     static int DEADLINE_TASK_INDEX = 9;
@@ -19,28 +21,33 @@ public class Duke {
                 }
                 return new ToDo(task.substring(TODO_TASK_INDEX));
             } else if (task.startsWith("deadline")) {
+                int indexBy = task.indexOf("/");
                 if (task.equals("deadline")) {
                     throw new DukeException();
-                }
-                int indexBy = task.indexOf("/");
-                return new Deadline(task.substring(DEADLINE_TASK_INDEX, indexBy - 1), task.substring(indexBy + 3));
-            } else if (task.startsWith("event")) {
-                if (task.equals("event")) {
+                } else if (indexBy== -1) {
                     throw new DukeException();
                 }
+                return new Deadline(task.substring(DEADLINE_TASK_INDEX, indexBy - 1), task.substring(indexBy + 3));
+            } else if (task.startsWith("event")) {
                 int indexAt = task.indexOf("/");
+                if (task.equals("event")) {
+                    throw new DukeException();
+                } else if (indexAt == -1) {
+                    throw new DukeException();
+                }
                 return new Event(task.substring(EVENT_TASK_INDEX, indexAt - 1), task.substring(indexAt + 3));
             } else {
                 System.out.println(lineCutOff);
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 System.out.println(lineCutOff);
+                return null;
             }
         } catch (DukeException e) {
             System.out.println(lineCutOff);
             System.out.println("☹ OOPS!!! The description of a " + task + " cannot be empty.");
             System.out.println(lineCutOff);
+            return null;
         }
-        return null;
     }
 
     public static void printTask(Task task, int listNum) {
@@ -50,16 +57,16 @@ public class Duke {
         System.out.println(lineCutOff + "\n");
     }
 
-    public static void printDone(Task task) {
+    public static void printDone(int listIndex) {
         try {
-            if (task == null) {
+            if (listIndex >= tasks.size()) {
                 throw new DukeException();
             }
             else {
-                task.setIsDone(true);
+                tasks.get(listIndex).setIsDone(true);
                 System.out.println(lineCutOff);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(task.toString());
+                System.out.println(tasks.get(listIndex).toString());
                 System.out.println(lineCutOff);
             }
         } catch (DukeException e) {
@@ -69,26 +76,40 @@ public class Duke {
         }
     }
 
-    public static void printList(Task[] tasks, int listNum) {
+    public static void printList(ArrayList<Task> tasks) {
         System.out.println(lineCutOff);
         try {
-            if (tasks[0] == null) {
+            if (tasks.get(0) == null) {
                 throw new DukeException();
 
             } else {
                 System.out.println("Here are the tasks in your list:");
-                int i = 0;
+                int i = 1;
                 for (Task task: tasks) {
-                    System.out.println(i + 1 + ". " + task.toString());
-                    if (i + 1 == listNum) {
+                    System.out.println(i + ". " + task.toString());
+                    if (i == tasks.size()) {
                         break;
                     }
+                    i++;
                 }
             }
         } catch (DukeException e) {
             System.out.println("☹ OOPS!!! Your list seems empty");
         }
         System.out.println(lineCutOff);
+    }
+
+    public static int setTasks(int listNum, String line) {
+        if (listNum >= tasks.size()) {
+            tasks.add(taskType(line));
+        } else if(tasks.get(listNum) == null) {
+            tasks.set(listNum,taskType(line));
+        }
+        if (tasks.get(listNum) != null) {
+            printTask(tasks.get(listNum), listNum);
+            listNum++;
+        }
+        return listNum;
     }
 
     public static void main(String[] args) {
@@ -100,29 +121,23 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
-        Task[] tasks = new Task[100];
         int listNum = 0;
 
+        tasks.add(null);
         Scanner in = new Scanner(System.in);
-        String line = new String(in.nextLine());
+        String line = in.nextLine();
 
 
         while (!(line.matches("Bye") ||line.matches("bye"))) {
             if (line.startsWith("done")) {
                 int listIndex = Integer.parseInt(line.substring(5)) - 1;
-                //tasks[listIndex].setIsDone(true);
-                printDone(tasks[listIndex]);
+                printDone(listIndex);
             } else if (!line.matches("list")) {
-                tasks[listNum] = taskType(line);
-                if (tasks[listNum] != null) {
-                    printTask(tasks[listNum], listNum);
-                    listNum++;
-                }
+                listNum = setTasks(listNum,line);
             } else if (line.matches("list")) {
-                printList(tasks,listNum);
+                printList(tasks);
             }
-
-            line = new String(in.nextLine());
+            line = in.nextLine();
         }
         System.out.println(lineCutOff + "\nBye. Hope to see you again soon!" + "\n" + lineCutOff);
     }
