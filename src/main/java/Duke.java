@@ -59,12 +59,12 @@ public class Duke {
         System.out.println(lineCutOff + "\n");
     }
 
-    public static void printDone(String line) {
+    public static void printDone(String task) {
         try {
-            if (line.equals("done")) {
+            if (task.equals("done")) {
                 throw new DukeException();
             }
-            int listIndex = Integer.parseInt(line.substring(DONE_TASK_INDEX)) - 1;
+            int listIndex = Integer.parseInt(task.substring(DONE_TASK_INDEX)) - 1;
             if (listIndex >= tasks.size()) {
                 throw new DukeException();
             } else if (tasks.get(listIndex) == null){
@@ -85,12 +85,12 @@ public class Duke {
         }
     }
 
-    public static void printDelete(String line) {
+    public static void printDelete(String task) {
         try {
-            if (line.equals("delete")) {
+            if (task.equals("delete")) {
                 throw new DukeException();
             }
-            int listIndex = Integer.parseInt(line.substring(DELETE_TASK_INDEX)) - 1;
+            int listIndex = Integer.parseInt(task.substring(DELETE_TASK_INDEX)) - 1;
             if (listIndex >= tasks.size()) {
                 throw new DukeException();
             } else if (tasks.get(listIndex) == null){
@@ -135,11 +135,11 @@ public class Duke {
         System.out.println(lineCutOff);
     }
 
-    public static int setTasks(int listNum, String line) {
+    public static int setTasks(int listNum, String task) {
         if (listNum >= tasks.size()) {
-            tasks.add(taskType(line));
+            tasks.add(taskType(task));
         } else if(tasks.get(listNum) == null) {
-            tasks.set(listNum,taskType(line));
+            tasks.set(listNum,taskType(task));
         }
         if (tasks.get(listNum) != null) {
             printTask(tasks.get(listNum), listNum);
@@ -162,20 +162,20 @@ public class Duke {
 
         tasks.add(null);
         Scanner in = new Scanner(System.in);
-        String line = in.nextLine();
+        String task = in.nextLine();
 
 
-        while (!(line.matches("Bye") ||line.matches("bye"))) {
-            if (line.startsWith("done")) {
-                printDone(line);
-            } else if (line.startsWith("delete")) {
-                printDelete(line);
-            } else if (!line.matches("list")) {
-                listNum = setTasks(listNum,line);
-            } else if (line.matches("list")) {
+        while (!(task.matches("Bye") ||task.matches("bye"))) {
+            if (task.startsWith("done")) {
+                printDone(task);
+            } else if (task.startsWith("delete")) {
+                printDelete(task);
+            } else if (!task.matches("list")) {
+                listNum = setTasks(listNum,task);
+            } else if (task.matches("list")) {
                 printList(tasks);
             }
-            line = in.nextLine();
+            task = in.nextLine();
         }
         System.out.println(lineCutOff + "\nBye. Hope to see you again soon!" + "\n" + lineCutOff);
     }
