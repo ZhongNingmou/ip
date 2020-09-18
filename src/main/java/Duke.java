@@ -26,6 +26,7 @@ public class Duke {
             File f = new File(FILE_PATH);
             FileWriter fw = new FileWriter(FILE_PATH);
             for (Task task: tasks){
+                if(task != null)
                 fw.write(task.writeToFile());
             }
             fw.close();
@@ -41,17 +42,34 @@ public class Duke {
             Task task;
             while(s.hasNext()){
                 String[] descriptions = s.nextLine().split("\\|");
-                task = switch (descriptions[0]) {
-                    case ("T") -> new ToDo(descriptions[2]);
-                    case ("D") -> new Deadline(descriptions[2], descriptions[3]);
-                    case ("E") -> new Event(descriptions[2], descriptions[3]);
-                    default -> new Task(descriptions[2]);
-                };
+                //task = switch (descriptions[0]) {
+                  //  case ("T") -> new ToDo(descriptions[2]);
+                    //case ("D") -> new Deadline(descriptions[2], descriptions[3]);
+                   // case ("E") -> new Event(descriptions[2], descriptions[3]);
+                   // default -> new Task(descriptions[2]);
+                //};
+                if (descriptions[0].equals("T")) {
+                    task = new ToDo(descriptions[2]);
+                    //break;
+                } else if (descriptions[0].equals("D")) {
+                    task = new Deadline(descriptions[2], descriptions[3]);
+                    //break;
+                } else if (descriptions[0].equals("E")) {
+                    task = new Event(descriptions[2], descriptions[3]);
+                    //break;
+                } else {
+                    tasks.add(null);
+                    break;
+                }
 
                 if (descriptions[1].equals("1")){
                     task.setIsDone(true);
                 }
-                tasks.add(task);
+                //if (tasks.get(0) == null){
+                  //  tasks.set(0,task);
+                //} else {
+                    tasks.add(task);
+                //}
             }
         } catch (FileNotFoundException e){
             System.out.println("File not found");
@@ -201,13 +219,16 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
-        int listNum = 0;
+        //int listNum = 0;
 
-        tasks.add(null);
+        //tasks.add(null);
         readFromFile(FILE_PATH);
+        int listNum = tasks.size();
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
 
+
+        //System.out.println(line);
 
         while (!(line.matches("Bye") ||line.matches("bye"))) {
             if (line.startsWith("done")) {
@@ -218,7 +239,8 @@ public class Duke {
                 writeToFile(FILE_PATH);
             } else if (!line.matches("list")) {
                 listNum = setTasks(listNum,line);
-                writeToFile(FILE_PATH);
+                //if(tasks.get(listNum-1) != null)
+                    writeToFile(FILE_PATH);
             } else if (line.matches("list")) {
                 printList(tasks);
             }
