@@ -42,21 +42,12 @@ public class Duke {
             Task task;
             while(s.hasNext()){
                 String[] descriptions = s.nextLine().split("\\|");
-                //task = switch (descriptions[0]) {
-                  //  case ("T") -> new ToDo(descriptions[2]);
-                    //case ("D") -> new Deadline(descriptions[2], descriptions[3]);
-                   // case ("E") -> new Event(descriptions[2], descriptions[3]);
-                   // default -> new Task(descriptions[2]);
-                //};
                 if (descriptions[0].equals("T")) {
                     task = new ToDo(descriptions[2]);
-                    //break;
                 } else if (descriptions[0].equals("D")) {
                     task = new Deadline(descriptions[2], descriptions[3]);
-                    //break;
                 } else if (descriptions[0].equals("E")) {
                     task = new Event(descriptions[2], descriptions[3]);
-                    //break;
                 } else {
                     tasks.add(null);
                     break;
@@ -65,11 +56,7 @@ public class Duke {
                 if (descriptions[1].equals("1")){
                     task.setIsDone(true);
                 }
-                //if (tasks.get(0) == null){
-                  //  tasks.set(0,task);
-                //} else {
-                    tasks.add(task);
-                //}
+                tasks.add(task);
             }
         } catch (FileNotFoundException e){
             System.out.println("File not found");
@@ -113,10 +100,10 @@ public class Duke {
         }
     }
 
-    public static void printTask(Task task, int listNum) {
+    public static void printTask(Task task) {
         System.out.println(lineCutOff + "\n" + "Got it. I've added this task: ");
         System.out.println("  " + task.toString());
-        System.out.println("Now you have " + (listNum + 1) + " tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(lineCutOff + "\n");
     }
 
@@ -175,10 +162,12 @@ public class Duke {
 
     public static void printList(ArrayList<Task> tasks) {
         System.out.println(lineCutOff);
+        if (tasks.size() == 0) {
+            tasks.add(null);
+        }
         try {
             if (tasks.get(0) == null) {
                 throw new DukeException();
-
             } else {
                 System.out.println("Here are the tasks in your list:");
                 int i = 1;
@@ -196,17 +185,17 @@ public class Duke {
         System.out.println(lineCutOff);
     }
 
-    public static int setTasks(int listNum, String line) {
-        if (listNum >= tasks.size()) {
+    public static void setTasks(String line) {
+        if(tasks.size() == 0)
+            tasks.add(null);
+        if (tasks.get(tasks.size() - 1) != null) {
             tasks.add(taskType(line));
-        } else if(tasks.get(listNum) == null) {
-            tasks.set(listNum,taskType(line));
+        } else if (tasks.get(tasks.size() - 1) == null) {
+            tasks.set(tasks.size() - 1, taskType(line));
         }
-        if (tasks.get(listNum) != null) {
-            printTask(tasks.get(listNum), listNum);
-            listNum++;
+        if (tasks.get(tasks.size() - 1) != null) {
+            printTask(tasks.get(tasks.size() - 1));
         }
-        return listNum;
     }
 
 
@@ -219,16 +208,11 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
-        //int listNum = 0;
 
         //tasks.add(null);
         readFromFile(FILE_PATH);
-        int listNum = tasks.size();
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
-
-
-        //System.out.println(line);
 
         while (!(line.matches("Bye") ||line.matches("bye"))) {
             if (line.startsWith("done")) {
@@ -238,9 +222,8 @@ public class Duke {
                 printDelete(line);
                 writeToFile(FILE_PATH);
             } else if (!line.matches("list")) {
-                listNum = setTasks(listNum,line);
-                //if(tasks.get(listNum-1) != null)
-                    writeToFile(FILE_PATH);
+                setTasks(line);
+                writeToFile(FILE_PATH);
             } else if (line.matches("list")) {
                 printList(tasks);
             }
