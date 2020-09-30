@@ -1,3 +1,6 @@
+package duke;
+
+/*import duke.DukeException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -8,11 +11,46 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.IOException;*/
+
+import duke.oop.Storage;
+import duke.oop.TaskList;
+import duke.oop.Ui;
 
 public class Duke {
-    public static ArrayList<Task> tasks = new ArrayList<>();
     public static final String FILE_PATH = "duke.txt";
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Duke(String filepath) {
+        ui = new Ui();
+        storage = new Storage(filepath);
+        tasks = new TaskList();
+    }
+
+    public void run(){
+        storage.readFromFile(tasks);
+        ui.printWelcomeMessage();
+        ui.dealWithInput(tasks);
+        storage.writeToFile(tasks);
+    }
+
+    public static void main(String[] args) {
+
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+
+        new Duke(FILE_PATH).run();
+    }
+}
+
+
+    /*public static ArrayList<Task> tasks = new ArrayList<>();
     static String lineCutOff = "_______________________";
     static int TODO_TASK_INDEX = 5;
     static int DEADLINE_TASK_INDEX = 9;
@@ -214,7 +252,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
 
-        while (!(line.matches("Bye") ||line.matches("bye"))) {
+        while (!(line.toLowerCase().matches("bye") )) {
             if (line.startsWith("done")) {
                 printDone(line);
                 writeToFile(FILE_PATH);
@@ -231,4 +269,4 @@ public class Duke {
         }
         System.out.println(lineCutOff + "\nBye. Hope to see you again soon!" + "\n" + lineCutOff);
     }
-}
+}*/
