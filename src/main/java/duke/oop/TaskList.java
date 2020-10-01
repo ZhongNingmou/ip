@@ -39,8 +39,7 @@ public class TaskList {
                 throw new DukeException();
             } else if (tasks.get(listIndex) == null){
                 throw new DukeException();
-            }
-            else {
+            } else {
                 tasks.get(listIndex).setIsDone(true);
                 System.out.println(lineCutOff);
                 System.out.println("Nice! I've marked this task as done:");
@@ -64,8 +63,7 @@ public class TaskList {
                 throw new DukeException();
             } else if (tasks.get(listIndex) == null){
                 throw new DukeException();
-            }
-            else {
+            } else {
                 System.out.println(lineCutOff);
                 System.out.println("Noted. I've removed this task: ");
                 System.out.println(tasks.get(listIndex).toString());
