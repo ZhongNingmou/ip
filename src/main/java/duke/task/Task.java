@@ -5,6 +5,10 @@ public class Task {
     protected boolean isDone;
     int val = 0;
 
+    /**
+     * Constructor of task
+     * @param description get task descriptions
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
