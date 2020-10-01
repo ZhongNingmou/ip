@@ -63,8 +63,7 @@ public class TaskList {
                 throw new DukeException();
             } else if (tasks.get(listIndex) == null){
                 throw new DukeException();
-            }
-            else {
+            } else {
                 System.out.println(lineCutOff);
                 System.out.println("Noted. I've removed this task: ");
                 System.out.println(tasks.get(listIndex).toString());
