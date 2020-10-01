@@ -22,6 +22,10 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
+    /**
+     * print out the task list when adding tasks
+     * @param task get task description
+     */
     public static void printTask(Task task) {
         System.out.println(lineCutOff + "\n" + "Got it. I've added this task: ");
         System.out.println("  " + task.toString());
@@ -29,6 +33,10 @@ public class TaskList {
         System.out.println(lineCutOff + "\n");
     }
 
+    /**
+     * print out the task list when setting tasks as done
+     * @param line get task description
+     */
     public static void printDone(String line) {
         try {
             if (line.equals("done")) {
@@ -53,6 +61,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * print out the task list when deleting tasks
+     * @param line get task description
+     */
     public static void printDelete(String line) {
         try {
             if (line.equals("delete")) {
@@ -86,6 +98,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * print out the task list when deleting tasks
+     */
     public static void printList() {
         System.out.println(lineCutOff);
         if (tasks.size() == 0) {
@@ -114,6 +129,11 @@ public class TaskList {
         System.out.println(lineCutOff);
     }
 
+    /**
+     * return different task types according to the task description
+     * @param task get task description
+     * @return task type
+     */
     public static Task taskType(String task) {
         try {
             if (task.startsWith("todo")) {
@@ -151,6 +171,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * set tasks according to the tasks descriptions
+     * @param line get task description
+     */
     public static void setTasks(String line) {
         if(tasks.size() == 0)
             tasks.add(null);
@@ -164,6 +188,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * print out the task list when asking to find tasks
+     * @param line get task description
+     */
     public static void printFind(String line){
         String description = line.substring(FIND_TASK_INDEX + 1);
         if (tasks.size() != 0) {

@@ -5,11 +5,19 @@ import java.util.Scanner;
 public class Ui {
     static String lineCutOff = "_______________________";
 
+    /**
+     * print out welcome message
+     */
     public static void printWelcomeMessage() {
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
 
     }
 
+    /**
+     * run different instructs according to the tasks description
+     * store data to the txt file
+     * @param tasks get tasks description
+     */
     public void dealWithInput(TaskList tasks){
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();

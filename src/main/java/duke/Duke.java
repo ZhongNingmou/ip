@@ -9,12 +9,19 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructor
+     * @param filepath setting the filepath
+     */
     public Duke(String filepath) {
         ui = new Ui();
         storage = new Storage(filepath);
         tasks = new TaskList();
     }
 
+    /**
+     * Run the main function
+     */
     public void run(){
         Storage.readFromFile(tasks);
         Ui.printWelcomeMessage();
@@ -22,6 +29,10 @@ public class Duke {
         Storage.writeToFile(tasks);
     }
 
+    /**
+     * Print out hello message and initialize duke
+     * @param args input arguments
+     */
     public static void main(String[] args) {
 
         String logo = " ____        _        \n"
