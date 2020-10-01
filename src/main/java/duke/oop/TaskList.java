@@ -8,8 +8,6 @@ import duke.task.ToDo;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
 public class TaskList {
     private static ArrayList<Task> tasks;
     static String lineCutOff = "_______________________";
@@ -18,6 +16,7 @@ public class TaskList {
     static int EVENT_TASK_INDEX = 6;
     static int DONE_TASK_INDEX = 5;
     static int DELETE_TASK_INDEX = 7;
+    static int FIND_TASK_INDEX = 4;
 
     public TaskList(){
         tasks = new ArrayList<>();
@@ -164,6 +163,21 @@ public class TaskList {
         if (tasks.get(tasks.size() - 1) != null) {
             printTask(tasks.get(tasks.size() - 1));
         }
+    }
+
+    public static void printFind(String line){
+        String description = line.substring(FIND_TASK_INDEX + 1);
+        ArrayList<Task> findTasks = (ArrayList<Task>) tasks.stream()
+                .filter(t -> t.getDescription().contains(description))
+                .collect(Collectors.toList());
+        System.out.println(lineCutOff);
+        System.out.println("Here are the matching tasks in your list:");
+        int index = 1;
+        for (Task task : findTasks) {
+            System.out.println(index + "." + task);
+            index++;
+        }
+        System.out.println(lineCutOff);
     }
 
     public ArrayList<Task> getTasksList() {
