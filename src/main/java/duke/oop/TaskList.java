@@ -72,7 +72,9 @@ public class TaskList {
                 System.out.println(tasks.get(listIndex).toString());
                 System.out.println(lineCutOff);
                 tasks.remove(tasks.get(listIndex));
-                if (tasks.get(tasks.size()-1) == null) {
+                if (tasks.size() == 0) {
+                    System.out.println("Now you have 0 item in the list.");
+                } else if (tasks.get(tasks.size()-1) == null) {
                     int size = tasks.size()-1;
                     System.out.println("Now you have " + size + " items in the list.");
                 } else {
@@ -167,6 +169,10 @@ public class TaskList {
 
     public static void printFind(String line){
         String description = line.substring(FIND_TASK_INDEX + 1);
+        if (tasks.size() != 0) {
+            if (tasks.get(tasks.size() - 1) == null)
+                tasks.remove(tasks.size() - 1);
+        }
         ArrayList<Task> findTasks = (ArrayList<Task>) tasks.stream()
                 .filter(t -> t.getDescription().contains(description))
                 .collect(Collectors.toList());

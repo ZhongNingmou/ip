@@ -15,6 +15,9 @@ import java.util.Scanner;
 public class Storage {
     private static String filepath;
     private static File f;
+    static int TASK_TYPE_INDEX = 0;
+    static int TASK_DESCRIPTION_INDEX = 3;
+    static int TASK_STATUS_INDEX = 2;
 
     public Storage(String filepath) {
         this.filepath = filepath;
@@ -43,12 +46,12 @@ public class Storage {
             Task task;
             while (s.hasNext()) {
                 String[] descriptions = s.nextLine().split("\\|");
-                if (descriptions[0].equals("T")) {
-                    task = new ToDo(descriptions[2]);
-                } else if (descriptions[0].equals("D")) {
-                    task = new Deadline(descriptions[2], descriptions[3]);
-                } else if (descriptions[0].equals("E")) {
-                    task = new Event(descriptions[2], descriptions[3]);
+                if (descriptions[TASK_TYPE_INDEX].equals("T")) {
+                    task = new ToDo(descriptions[TASK_STATUS_INDEX]);
+                } else if (descriptions[TASK_TYPE_INDEX].equals("D")) {
+                    task = new Deadline(descriptions[TASK_STATUS_INDEX], descriptions[TASK_DESCRIPTION_INDEX]);
+                } else if (descriptions[TASK_TYPE_INDEX].equals("E")) {
+                    task = new Event(descriptions[TASK_STATUS_INDEX], descriptions[TASK_DESCRIPTION_INDEX]);
                 } else {
                     tasks.add(null);
                     break;
