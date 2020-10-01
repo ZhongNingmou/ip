@@ -5,7 +5,6 @@ public class Task {
     protected boolean isDone;
     int val = 0;
 
-
     public Task(String description) {
         this.description = description;
         this.isDone = false;
