@@ -11,15 +11,9 @@ public class Parser {
     private static final String DONE = "done";
     private static final String FIND = "find";
 
-    /**
-     * A constructor to initialise a parser with command.
-     *
-     * @param command command of the parser
-     */
     public Parser(String command){
         this.command = command;
     }
-
 
     public static String getCommand(String command) {
         if (command.equals(LIST)) {
