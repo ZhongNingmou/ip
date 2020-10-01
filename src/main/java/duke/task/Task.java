@@ -7,7 +7,7 @@ public class Task {
 
     /**
      * Constructor of task
-     * @param description get task description
+     * @param description get task descriptions
      */
     public Task(String description) {
         this.description = description;
