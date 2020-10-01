@@ -11,10 +11,19 @@ public class Parser {
     private static final String DONE = "done";
     private static final String FIND = "find";
 
+    /**
+     * Constructor of parser
+     * @param command get command from user
+     */
     public Parser(String command){
         this.command = command;
     }
 
+    /**
+     * return different types of tasks according to the command
+     * @param command get command details
+     * @return type of task
+     */
     public static String getCommand(String command) {
         if (command.equals(LIST)) {
             return LIST;

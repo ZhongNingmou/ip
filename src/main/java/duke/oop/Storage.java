@@ -19,11 +19,19 @@ public class Storage {
     static int TASK_DESCRIPTION_INDEX = 3;
     static int TASK_STATUS_INDEX = 2;
 
+    /**
+     * constructor of storage
+     * @param filepath get the filepath
+     */
     public Storage(String filepath) {
         this.filepath = filepath;
         f = new File(filepath);
     }
 
+    /**
+     * write tasks data to the txt file according to the file path
+     * @param tasks get tasks description
+     */
     public static void writeToFile(TaskList tasks) {
         try {
             File f = new File(filepath);
@@ -39,6 +47,10 @@ public class Storage {
         }
     }
 
+    /**
+     * read tasks data from the txt file according to the file path
+     * @param tasks get tasks description
+     */
     public static void readFromFile(TaskList tasks) {
         try {
             File f = new File(filepath);
