@@ -16,10 +16,10 @@ public class Duke {
     }
 
     public void run(){
-        storage.readFromFile(tasks);
-        ui.printWelcomeMessage();
+        Storage.readFromFile(tasks);
+        Ui.printWelcomeMessage();
         ui.dealWithInput(tasks);
-        storage.writeToFile(tasks);
+        Storage.writeToFile(tasks);
     }
 
     public static void main(String[] args) {
