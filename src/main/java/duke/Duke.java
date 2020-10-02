@@ -10,7 +10,7 @@ public class Duke {
     private Ui ui;
 
     /**
-     * Constructor
+     * Constructor of duke
      * @param filepath setting the filepath
      */
     public Duke(String filepath) {
@@ -20,7 +20,7 @@ public class Duke {
     }
 
     /**
-     * Run the main function
+     * Runs the main function
      */
     public void run(){
         Storage.readFromFile(tasks);
@@ -30,7 +30,7 @@ public class Duke {
     }
 
     /**
-     * Print out hello message and initialize duke
+     * Prints out hello message and initialize duke
      * @param args input arguments
      */
     public static void main(String[] args) {

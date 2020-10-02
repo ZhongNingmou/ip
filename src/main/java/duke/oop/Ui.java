@@ -6,7 +6,7 @@ public class Ui {
     static String lineCutOff = "_______________________";
 
     /**
-     * print out welcome message
+     * prints out welcome message
      */
     public static void printWelcomeMessage() {
         System.out.println(lineCutOff + "\nHello! I'm Duke\nWhat can I do for you?" + "\n" + lineCutOff);
@@ -14,7 +14,7 @@ public class Ui {
     }
 
     /**
-     * run different instructs according to the tasks description
+     * runs different instructs according to the tasks description
      * store data to the txt file
      * @param tasks get tasks description
      */

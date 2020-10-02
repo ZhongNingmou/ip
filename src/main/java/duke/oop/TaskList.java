@@ -23,7 +23,7 @@ public class TaskList {
     }
 
     /**
-     * print out the task list when adding tasks
+     * prints out the task list when adding tasks
      * @param task get task description
      */
     public static void printTask(Task task) {
@@ -34,7 +34,7 @@ public class TaskList {
     }
 
     /**
-     * print out the task list when setting tasks as done
+     * prints out the task list when setting tasks as done
      * @param line get task description
      */
     public static void printDone(String line) {
@@ -62,7 +62,7 @@ public class TaskList {
     }
 
     /**
-     * print out the task list when deleting tasks
+     * prints out the task list when deleting tasks
      * @param line get task description
      */
     public static void printDelete(String line) {
@@ -99,7 +99,7 @@ public class TaskList {
     }
 
     /**
-     * print out the task list when deleting tasks
+     * prints out the task list when deleting tasks
      */
     public static void printList() {
         System.out.println(lineCutOff);
@@ -172,7 +172,7 @@ public class TaskList {
     }
 
     /**
-     * set tasks according to the tasks descriptions
+     * sets tasks according to the tasks descriptions
      * @param line get task description
      */
     public static void setTasks(String line) {
@@ -189,7 +189,7 @@ public class TaskList {
     }
 
     /**
-     * print out the task list when asking to find tasks
+     * prints out the task list when asking to find tasks
      * @param line get task description
      */
     public static void printFind(String line){

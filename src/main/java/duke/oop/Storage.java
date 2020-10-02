@@ -29,7 +29,7 @@ public class Storage {
     }
 
     /**
-     * write tasks data to the txt file according to the file path
+     * writes tasks data to the txt file according to the file path
      * @param tasks get tasks description
      */
     public static void writeToFile(TaskList tasks) {
@@ -48,7 +48,7 @@ public class Storage {
     }
 
     /**
-     * read tasks data from the txt file according to the file path
+     * reads tasks data from the txt file according to the file path
      * @param tasks get tasks description
      */
     public static void readFromFile(TaskList tasks) {
